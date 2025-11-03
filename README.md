@@ -63,7 +63,7 @@ LangGraph supports saving and restoring the graph state, enabling **human-in-the
 
 ### 🔁 Graph Components
 
-![Agent Loop Diagram](images/agent-loop.png)
+![Agent Loop Diagram](images/agent_loop.png)
 
 | Concept | Meaning |
 |----------|----------|
