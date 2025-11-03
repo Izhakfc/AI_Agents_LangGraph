@@ -63,6 +63,8 @@ LangGraph supports saving and restoring the graph state, enabling **human-in-the
 
 ### 🔁 Graph Components
 
+![Agent Loop Diagram](images/agent-loop.png)
+
 | Concept | Meaning |
 |----------|----------|
 | **Nodes** | Represent agents or functions |
@@ -85,4 +87,4 @@ It allows the agent to remember information between executions—such as context
 ### 🌐 Tavily Integration
 
 **Tavily** is a search engine specifically designed for AI agents and applications.  
-It acts as a **web access layer** that provides **real-time, factual information** through APIs, helping agents overcome the knowledge limitations of LLMs (which are trained on past data).
+It acts as a **web access layer** that provides **real-time, factual information** through APIs, helping agents overcome the knowledge limitations of LLMs (which are trained on past data).git
