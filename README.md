@@ -32,7 +32,7 @@ This loop repeats until the agent determines that it has reached a final answer 
 
 ## Section 2: AgentState, LangGraph, and the Persistence Layer
 
-### 🧩 LangChain Components
+### LangChain Components
 
 - **Prompt Templates:**  
   Reusable templates that include dynamic variables such as `{tools}`, `{tool_names}`, and `{input}`.  
@@ -45,7 +45,7 @@ External functions or APIs that the agent can call to perform actions (e.g., a c
 LangGraph helps you **describe and control execution** using **directed acyclic graphs (DAGs)** and **persistence**.  
 
 ---
-## 🕸️ LangGraph Overview
+## LangGraph Overview
 
 LangGraph extends LangChain by supporting **graph-based agent flows**.  
 This makes it possible to design complex and controlled reasoning pipelines.
@@ -61,7 +61,7 @@ LangGraph supports saving and restoring the graph state, enabling **human-in-the
 
 > **Human-in-the-loop** means a person can review, approve, or modify the agent’s actions or decisions before continuing the process.
 
-### 🔁 Graph Components
+### Graph Components
 
 ![Agent Loop Diagram](images/agent_loop.png)
 
@@ -75,7 +75,7 @@ LangGraph supports saving and restoring the graph state, enabling **human-in-the
 
 ---
 
-### 🧠 State and Persistence Layer
+### State and Persistence Layer
 
 - **Agent State:**  
 The current data or context the agent uses during reasoning. This state is accessible to all parts of the graph.
@@ -84,7 +84,45 @@ The current data or context the agent uses during reasoning. This state is acces
 The **persistence layer** is the component of an AI agent system responsible for **storing and retrieving data that must persist beyond a single reasoning cycle or run**.  
 It allows the agent to remember information between executions—such as context, prior actions, or user data.
 
-### 🌐 Tavily Integration
+### Tavily Integration
 
 **Tavily** is a search engine specifically designed for AI agents and applications.  
-It acts as a **web access layer** that provides **real-time, factual information** through APIs, helping agents overcome the knowledge limitations of LLMs (which are trained on past data).git
+It acts as a **web access layer** that provides **real-time, factual information** through APIs, helping agents overcome the knowledge limitations of LLMs (which are trained on past data)
+
+## Section 3: Persistence and Streaming
+
+**Persistence** and **streaming** are key features that allow AI agents to maintain state and provide real-time visibility into their reasoning process.
+
+---
+
+### Persistence
+
+- **Persistence** allows you to keep the **state of an Agent** at a specific point in time.  
+  This enables:
+  - Returning to a previous state
+  - Remembering context across long-running operations
+  - Saving checkpoints between reasoning steps
+
+- In **LangGraph**, persistence is achieved through a **checkpointer**.  
+  The checkpointer tracks the **state of the agent after and between nodes** in the graph.
+
+  Example:  
+  Using the `SQLiteSaver` as the checkpointer  
+  ```python
+  from langgraph.checkpoint.sqlite import SqliteSaver
+  checkpointer = SqliteSaver.from_conn_string(":memory:")
+
+---
+
+### Streaming
+- Streaming allows an agent to emit a sequence of signals or events that describe what’s happening in its current state during execution.
+- These streams provide visibility into the agent’s reasoning process by outputting intermediate steps or states in real time.
+
+#### Threads in Streaming
+- The thread-based stream methods return intermediate states and enable you to monitor the execution process.
+- You can reinvoke the same thread using its `thread_id` to follow up with additional questions or continue from where it left off.
+
+#### Stream Tokens
+- LangGraph supports `asynchronous checkpointers` with AsyncSqliteSaver.
+- **Token-level streaming** is available through `on_chat_model_stream`, which emits new tokens in real time.
+- This enables event updates for the underlying stream—providing a live view of the agent’s thought process and output generation.
